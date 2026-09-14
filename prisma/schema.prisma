@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Single-user local practice profile.
+model Profile {
+  id              Int       @id @default(autoincrement())
+  level           String // A1 | B1 | B2
+  notes           String? // user-pasted study notes for their level
+  xp              Int       @default(0)
+  streak          Int       @default(0)
+  longestStreak   Int       @default(0)
+  lastSessionDate DateTime?
+  onboarded       Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Session {
+  id          String    @id @default(cuid())
+  persona     String // Friend | Client | Professional | Doctor | CEO
+  scenario    String // scenario title
+  level       String // level at time of session
+  messages    String // JSON string of ChatMessage[]
+  report      String? // JSON string of SessionReport once ended
+  xpEarned    Int       @default(0)
+  status      String    @default("active") // active | completed
+  createdAt   DateTime  @default(now())
+  completedAt DateTime?
+}
+
+model Mistake {
+  id          String   @id @default(cuid())
+  category    String // grammar | vocabulary | fluency
+  description String // short normalized description, used as recurring key
+  example     String? // example of the mistake in context
+  correction  String? // suggested correction
+  occurrences Int      @default(1)
+  firstSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
+}
