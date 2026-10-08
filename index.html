@@ -1,101 +1,882 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the history and significance of Hotmail, one of the world's oldest email services.">
-    <title>The History of Hotmail</title>
-    <style>
-        /* CSS Styles */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  =====================================================================
+  BLOCKAWAY — single-file website (index.html)
+  ---------------------------------------------------------------------
+  DEPLOYMENT CHECKLIST (search this file for these tokens):
+    1. Replace every "https://www.your-domain.com/" with your real domain
+       (canonical, Open Graph, Twitter, JSON-LD).
+    2. Configure the proxy backend in the CONFIG object inside <script>
+       at the bottom of this file (PROXY_URL_TEMPLATE). Until it is set,
+       the tool uses a clearly labeled DIRECT-NAVIGATION fallback, which
+       does NOT bypass any filter.
+    3. The sponsored direct link is CONFIG.DIRECT_LINK.
+  A static HTML file cannot proxy websites by itself: browsers block
+  cross-origin page fetching (CORS), and rewriting pages requires a server.
+  =====================================================================
+-->
+<title>Blockaway Proxy – Free Website Unblocker &amp; Web Proxy Tool</title>
+<meta name="description" content="Blockaway is a free, lightweight web proxy tool. Enter a URL, follow two simple steps, and open websites through a configured proxy. Works on Windows, Mac, Android and iPhone.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1d4ed8">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https:; object-src 'none'; base-uri 'none'">
+<link rel="canonical" href="https://www.your-domain.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d4ed8'/%3E%3Cpath d='M16 6l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V9z' fill='%23fff'/%3E%3C/svg%3E">
 
-        body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #e0f7fa;
-        }
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Blockaway">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Blockaway Proxy – Free Website Unblocker">
+<meta property="og:description" content="Open websites through a simple, mobile-friendly web proxy tool. Enter a URL and follow two clear steps.">
+<meta property="og:url" content="https://www.your-domain.com/">
 
-        .container {
-            max-width: 900px;
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            margin: 50px auto; /* Centers the container with margin from the top */
-            padding: 40px;
-        }
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Blockaway Proxy – Free Website Unblocker">
+<meta name="twitter:description" content="Open websites through a simple, mobile-friendly web proxy tool. Enter a URL and follow two clear steps.">
 
-        h1 {
-            text-align: center;
-            color: #00796b;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-        }
+<!-- Structured data: only properties that accurately describe this page -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.your-domain.com/#website",
+      "url": "https://www.your-domain.com/",
+      "name": "Blockaway",
+      "description": "A lightweight web proxy and website unblocker tool.",
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.your-domain.com/#app",
+      "name": "Blockaway Proxy",
+      "url": "https://www.your-domain.com/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any operating system with a modern web browser",
+      "browserRequirements": "Requires JavaScript and permission to open new tabs.",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.your-domain.com/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is Blockaway?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Blockaway is a free browser-based website unblocker. You enter a website address, and the tool opens it in a new tab through the web proxy configured by the site operator. If no proxy is configured, the tool says so and opens the site directly instead." } },
+        { "@type": "Question", "name": "Is Blockaway free to use?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Blockaway is free. The first click on Access Website opens a clearly disclosed sponsored page in a new tab, which helps cover running costs. The second click opens the website you entered." } },
+        { "@type": "Question", "name": "Does Blockaway hide my IP address?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Only when a page is loaded through a proxy. In that case the destination website normally sees the proxy server's IP address instead of yours, but the proxy operator can see the traffic it handles. In direct-navigation mode your IP address is not hidden. Blockaway does not provide full anonymity or end-to-end encryption." } },
+        { "@type": "Question", "name": "Is Blockaway the same as blockaway.net or CroxyProxy?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. This Blockaway site is an independent tool. It is not affiliated with, endorsed by, or operated by blockaway.net, CroxyProxy, or any other proxy service mentioned on this page." } },
+        { "@type": "Question", "name": "Why did a sponsored page open when I clicked Access Website?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The first click intentionally opens one sponsored page in a new tab. This is disclosed under the button. Your Blockaway tab stays open and keeps the URL you typed, so you can return and click Continue to Website." } },
+        { "@type": "Question", "name": "Why won't some websites work through a web proxy?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sites with complex logins, streaming video, strict bot protection, or heavy JavaScript can break when their pages are rewritten by a proxy. Some websites also block known proxy IP addresses. In those cases a different proxy or a VPN may work better." } },
+        { "@type": "Question", "name": "Is using a web proxy legal?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Using a web proxy is legal in most countries, including the United States. However, schools, employers and some countries have rules about bypassing network filters. You are responsible for following the laws and acceptable-use policies that apply to you." } },
+        { "@type": "Question", "name": "Does Blockaway store the websites I visit?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Blockaway page keeps the URL you typed in your browser's session storage so the two-step process works. It is cleared when you close the tab. Blockaway does not send that URL to its own server, but the sponsored page and any proxy provider operate under their own privacy policies." } }
+      ]
+    }
+  ]
+}
+</script>
 
-        p {
-            color: #333;
-            font-size: 1.15em;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
+<style>
+/* ===================== Design tokens ===================== */
+:root{
+  --bg:#f8fafc;
+  --surface:#ffffff;
+  --ink:#0f172a;
+  --ink-2:#334155;
+  --muted:#475569;
+  --line:#e2e8f0;
+  --brand:#1d4ed8;
+  --brand-2:#2563eb;
+  --brand-soft:#eff6ff;
+  --ok:#047857;  --ok-bg:#ecfdf5;
+  --warn:#92400e;--warn-bg:#fffbeb;
+  --err:#b91c1c; --err-bg:#fef2f2;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06);
+  --shadow-lg:0 2px 4px rgba(15,23,42,.05),0 18px 48px rgba(29,78,216,.12);
+  --max:1120px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;font-family:var(--font);font-size:1.0625rem;line-height:1.65;color:var(--ink-2);background:var(--bg)}
+h1,h2,h3{color:var(--ink);line-height:1.2;letter-spacing:-.015em;margin:0 0 .6em}
+h1{font-size:clamp(2rem,4.6vw,3.1rem);font-weight:800}
+h2{font-size:clamp(1.55rem,3vw,2.1rem);font-weight:750}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0 0 1em}
+a{color:var(--brand)}
+a:hover{color:var(--brand-2)}
+:focus-visible{outline:3px solid #93c5fd;outline-offset:2px;border-radius:6px}
+.container{max-width:var(--max);margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
 
-        @media only screen and (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+/* ===================== Header ===================== */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;color:var(--ink);text-decoration:none}
+.brand svg{flex:none}
+.nav-links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.nav-links a{display:block;padding:8px 14px;border-radius:999px;color:var(--ink-2);text-decoration:none;font-weight:600;font-size:.95rem;transition:background .15s,color .15s}
+.nav-links a:hover{background:var(--brand-soft);color:var(--brand)}
+.nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:44px;cursor:pointer;color:var(--ink)}
+@media (max-width:760px){
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center}
+  .nav-links{position:absolute;top:64px;left:0;right:0;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);padding:8px 16px 16px;box-shadow:var(--shadow);display:none}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 14px}
+}
 
-            h1 {
-                font-size: 2em;
-            }
+/* ===================== Hero + tool ===================== */
+.hero{padding:56px 0 48px;background:radial-gradient(1200px 400px at 50% -10%,#dbeafe 0%,rgba(219,234,254,0) 70%)}
+.hero-inner{max-width:780px;margin:0 auto;text-align:center}
+.eyebrow{display:inline-block;background:var(--brand-soft);color:var(--brand);font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:16px}
+.lead{font-size:1.15rem;color:var(--muted);max-width:640px;margin:0 auto 28px}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lg);padding:22px;text-align:left}
+.tool-row{display:flex;gap:10px}
+.tool label{display:block;font-weight:700;color:var(--ink);margin-bottom:8px;font-size:.95rem}
+.url-input{flex:1;min-width:0;height:56px;padding:0 18px;font:inherit;font-size:1rem;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:var(--radius);transition:border-color .15s,box-shadow .15s}
+.url-input::placeholder{color:#64748b}
+.url-input:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 4px rgba(37,99,235,.15)}
+.url-input[aria-invalid="true"]{border-color:var(--err)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 26px;font:inherit;font-weight:700;font-size:1rem;color:#fff;background:var(--brand);border:0;border-radius:var(--radius);cursor:pointer;white-space:nowrap;transition:background .15s,transform .05s,box-shadow .15s;box-shadow:0 6px 16px rgba(29,78,216,.25)}
+.btn:hover{background:var(--brand-2)}
+.btn:active{transform:translateY(1px)}
+.btn[aria-busy="true"]{opacity:.8;cursor:progress}
+.btn.is-continue{background:var(--ok)}
+.btn.is-continue:hover{background:#065f46}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+.btn[aria-busy="true"] .spinner{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-link{background:none;border:0;padding:0;font:inherit;color:var(--brand);text-decoration:underline;cursor:pointer}
+.tool-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;margin-top:12px;font-size:.88rem;color:var(--muted)}
+.mode{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:#f59e0b}
+.mode.proxy .dot{background:#10b981}
+.disclosure{font-size:.88rem;color:var(--muted);margin:10px 0 0}
+.status{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.95rem;display:none;border:1px solid transparent}
+.status.show{display:block}
+.status.info{background:var(--brand-soft);color:#1e3a8a;border-color:#bfdbfe}
+.status.ok{background:var(--ok-bg);color:var(--ok);border-color:#a7f3d0}
+.status.warn{background:var(--warn-bg);color:var(--warn);border-color:#fde68a}
+.status.error{background:var(--err-bg);color:var(--err);border-color:#fecaca}
+.status a,.status .btn-link{color:inherit;font-weight:700}
+.steps-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;padding:0;list-style:none;counter-reset:s}
+.steps-mini li{font-size:.86rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;counter-increment:s}
+.steps-mini li::before{content:counter(s);display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-right:8px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;font-size:.78rem}
+@media (max-width:640px){
+  .hero{padding:36px 0 32px}
+  .tool{padding:16px}
+  .tool-row{flex-direction:column}
+  .url-input{flex:none;width:100%}
+  .btn{width:100%}
+  .steps-mini{grid-template-columns:1fr}
+}
 
-            p {
-                font-size: 1.05em;
-            }
-        }
-    </style>
+/* ===================== Content sections ===================== */
+section.block{padding:64px 0;border-top:1px solid var(--line)}
+section.block.alt{background:var(--surface)}
+.section-head{max-width:760px;margin-bottom:28px}
+.prose{max-width:780px}
+.grid{display:grid;gap:18px}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+section.block.alt .card{background:var(--bg)}
+.card p:last-child{margin-bottom:0}
+.icon{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);color:var(--brand);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+ol.steps{list-style:none;padding:0;margin:0;display:grid;gap:14px;counter-reset:st}
+ol.steps li{position:relative;padding:18px 18px 18px 66px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+ol.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:18px;top:18px;width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+ol.steps strong{color:var(--ink)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.95rem}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--brand-soft);color:var(--ink);font-weight:700}
+tbody tr:last-child td{border-bottom:0}
+tbody th{color:var(--ink);font-weight:600}
+.note{font-size:.92rem;color:var(--muted);margin-top:12px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0 20px;margin-bottom:10px}
+section.block.alt details{background:var(--bg)}
+summary{cursor:pointer;list-style:none;padding:18px 28px 18px 0;font-weight:700;color:var(--ink);position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:0;top:14px;font-size:1.5rem;font-weight:400;color:var(--brand)}
+details[open] summary::after{content:"−"}
+details>div{padding:0 0 18px}
+.cta{text-align:center;background:linear-gradient(135deg,#1d4ed8,#1e40af);color:#dbeafe;border-radius:20px;padding:44px 24px}
+.cta h2{color:#fff}
+.cta p{max-width:620px;margin:0 auto 22px}
+.cta .btn{background:#fff;color:var(--brand);box-shadow:none}
+.cta .btn:hover{background:#eff6ff}
+
+/* ===================== Footer ===================== */
+.site-footer{background:#0f172a;color:#cbd5e1;padding:52px 0 28px;font-size:.95rem}
+.site-footer h2{color:#fff;font-size:1rem;margin-bottom:12px}
+.site-footer a{color:#e2e8f0;text-decoration:none}
+.site-footer a:hover{text-decoration:underline;color:#fff}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.footer-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.legal{border-top:1px solid #1e293b;margin-top:36px;padding-top:20px;font-size:.86rem;color:#94a3b8}
+.legal p{margin-bottom:.6em}
+@media (max-width:760px){.footer-grid{grid-template-columns:1fr}}
+</style>
 </head>
 
 <body>
-    <div class="container">
-        <section class="content">
-            <h1>The History of Hotmail</h1>
-            <p>
-                Hotmail is one of the world's oldest and most professional email services. <a href="https://medwinpublishers.com/articles/hotmail-signup/">hotmail</a> is free, secure, and has a user-friendly interface. Hotmail currently has 400 million users worldwide. Old Hotmail users can still access their accounts using the @hotmail.com email address.
-            </p>
-            <p>
-                Sabeer Bhatia and Jack Smith, two programmers, created Hotmail in 1996. It was acquired by Microsoft for $400 million and integrated into Messenger services a year later, in December 1997. This was a significant moment that laid the groundwork for <a href="https://medwinpublishers.com/articles/hotmail-login/">hotmail</a> success as it expanded into new markets and rose to the top of the global webmail services. In 1999, Hotmail had over 30 million active users.
-            </p>
-            <p>
-                Hotmail revolutionized the email service by offering users a unique @hotmail.com email address. This quickly became synonymous with professionalism and functionality. It offered a variety of features, including spam protection, email filters, and customizable themes. The service also prioritized security, ensuring that users' data was kept private and protected from unauthorized access.
-            </p>
-            <p>
-                One of the key reasons for Hotmail's initial success was its accessibility. It was one of the first web-based email services that could be accessed from any device with an internet connection, making it incredibly convenient for users around the world. Whether at home, work, or on the go, Hotmail users could send and receive messages without needing to be tied to a specific device or location.
-            </p>
-            <p>
-                In the late 90s, as internet usage grew rapidly, Hotmail's user base expanded exponentially. The platform's seamless integration with Microsoft's products and services only further enhanced its appeal. For many users, Hotmail became the go-to email provider due to its compatibility with other Microsoft software, including Microsoft Office and the Windows operating system.
-            </p>
-            <p>
-                By the early 2000s, Hotmail had established itself as a dominant force in the webmail industry. Its user-friendly interface and continuous feature updates kept it competitive in a market that was starting to see the emergence of other major players, such as Yahoo Mail and Gmail. The ability to store contacts, organize emails into folders, and utilize advanced search functions were just a few of the features that made Hotmail stand out.
-            </p>
-            <p>
-                Another major factor in Hotmail's success was its integration with Microsoft Messenger, the popular instant messaging service. This integration allowed users to easily switch between email and instant messaging, further enhancing their online communication experience. Whether it was sending quick messages to friends or composing longer emails to colleagues, Hotmail offered a comprehensive communication platform.
-            </p>
-            <p>
-                Over time, Hotmail underwent several rebranding efforts as part of Microsoft's broader strategy to unify its online services. In 2012, Microsoft announced that Hotmail would be transitioned to Outlook.com, a new and improved email service that would carry on Hotmail's legacy while offering enhanced features. The transition was seamless for existing Hotmail users, who could continue to use their @hotmail.com email addresses if they wished.
-            </p>
-            <p>
-                Outlook.com introduced a range of new features, including a cleaner interface, better integration with cloud services like OneDrive, and improved spam filtering. Despite the name change, many users still refer to their email accounts as Hotmail, a testament to the brand's lasting impact on the world of email.
-            </p>
-            <p>
-                Today, Hotmail (now Outlook.com) remains one of the most popular email services globally. With hundreds of millions of users, it continues to evolve and adapt to the changing landscape of digital communication. The platform's focus on security, privacy, and innovation has ensured its place in the history of online communication.
-            </p>
-            <p>
-                The story of Hotmail is not just about the evolution of a product but also the evolution of the internet itself. From its humble beginnings in the mid-90s to its status as a global communication powerhouse, Hotmail has played a crucial role in shaping the way we connect with one another. As we look to the future of email and online communication, Hotmail's legacy will undoubtedly continue to influence the industry for years to come.
-            </p>
-        </section>
-    </div>
-</body>
+<a class="skip" href="#main">Skip to content</a>
 
+<header class="site-header">
+  <nav class="container nav" aria-label="Main navigation">
+    <a class="brand" href="#home" aria-label="Blockaway home">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#1d4ed8"/><path d="M16 6l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V9z" fill="#fff"/><path d="M12.5 16l2.5 2.5 4.5-5" stroke="#1d4ed8" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Blockaway
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ===================== HERO / TOOL ===================== -->
+<section class="hero" id="home" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <span class="eyebrow">Free web proxy tool</span>
+    <h1 id="hero-title">Blockaway Proxy – Access Websites Online</h1>
+    <p class="lead">Blockaway is a lightweight website unblocker that runs in your browser. Paste a website address, follow two clear steps, and open the page in a new tab through a web proxy — no download, account, or extension required.</p>
+
+    <div class="tool">
+      <form id="proxy-form" novalidate>
+        <label for="url-input">Website address</label>
+        <div class="tool-row">
+          <input class="url-input" id="url-input" name="url" type="text" inputmode="url"
+                 autocomplete="url" autocapitalize="off" spellcheck="false" maxlength="2048"
+                 placeholder="Enter the website URL you want to access..."
+                 aria-describedby="disclosure status" required>
+          <button class="btn" id="access-btn" type="submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="access-btn-label">Access Website</span>
+          </button>
+        </div>
+        <div class="tool-meta">
+          <span class="mode" id="mode-badge"><span class="dot" aria-hidden="true"></span><span id="mode-text">Checking mode…</span></span>
+          <button type="button" class="btn-link" id="reset-btn" hidden>Start over</button>
+        </div>
+        <p class="disclosure" id="disclosure"><strong>Sponsored step:</strong> your first click opens one sponsored page in a new tab to help keep Blockaway free. Your Blockaway tab stays open and remembers your URL — click <em>Continue to Website</em> to open it.</p>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+      </form>
+      <ol class="steps-mini" aria-label="Quick steps">
+        <li>Type or paste a URL like <code>example.com</code></li>
+        <li>Click <strong>Access Website</strong> (sponsored tab opens)</li>
+        <li>Click <strong>Continue to Website</strong></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT IS ===================== -->
+<section class="block alt" id="what-is-blockaway" aria-labelledby="what-title">
+  <div class="container prose">
+    <h2 id="what-title">What Is Blockaway Proxy?</h2>
+    <p><strong>Blockaway Proxy is a free, browser-based website unblocker.</strong> It gives you one simple box where you enter a web address, and it opens that address in a new tab through the web proxy server configured by this site's operator. A web proxy is an intermediary server: it requests the page on your behalf and passes the result back to your browser, so the destination website communicates with the proxy instead of directly with your device.</p>
+    <p>People often look for a <em>proxy site like Blockaway</em> when a page is unavailable on their current network, when they want to view a site without installing software, or when they need a quick option on a shared or borrowed device. Because the tool runs entirely in the browser, it works the same way on desktops, laptops, tablets, and phones.</p>
+    <p>You may have arrived here after searching for <em>blockaway net</em>, <em>blockaway com</em>, or <em>croxyproxy blockaway</em>. The Blockaway name is widely associated with free web proxy services, including sites powered by CroxyProxy. <strong>This website is an independent tool</strong> and is not operated by, affiliated with, or endorsed by blockaway.net, CroxyProxy, or any other service named on this page.</p>
+    <p><strong>What Blockaway can and cannot do:</strong> it can route a page through a configured proxy, validate the address you enter, and keep the process simple. It cannot guarantee that every website will load, it does not make you anonymous, and it does not replace a VPN for protecting all of your device's traffic.</p>
+  </div>
+</section>
+
+<!-- ===================== HOW TO USE ===================== -->
+<section class="block" id="how-it-works" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="how-title">How to Use Blockaway Proxy</h2>
+      <p>Using this website unblocker takes less than a minute. Here is exactly what happens at each step.</p>
+    </div>
+    <ol class="steps">
+      <li><strong>Enter a website address.</strong> Type or paste a URL such as <code>example.com</code> or <code>https://example.com/page</code> into the box at the top of this page. If you leave out <code>https://</code>, Blockaway adds it for you.</li>
+      <li><strong>Click “Access Website.”</strong> Blockaway checks that the address is a valid web link. It then opens one sponsored page in a new tab. Your Blockaway tab stays open and keeps the URL you entered.</li>
+      <li><strong>Return to the Blockaway tab.</strong> The button now says <em>Continue to Website</em>, and a short message explains the next step.</li>
+      <li><strong>Click “Continue to Website.”</strong> Blockaway opens your website in a new tab through the configured proxy. The status message tells you whether the page was opened through a proxy or directly, so you always know which mode was used.</li>
+      <li><strong>Browse, then come back for the next site.</strong> To open a different website, enter a new URL and repeat the steps. Use <em>Start over</em> to clear the saved address at any time.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section class="block alt" id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="features-title">Key Features of Blockaway</h2>
+      <p>Every feature listed here is built into this page. Nothing is exaggerated.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 12h10"/></svg></div>
+        <h3>Simple website access interface</h3>
+        <p>A single URL box and one button. No sign-up, no settings to configure, and no software to install.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>URL validation and safety checks</h3>
+        <p>Blockaway accepts only standard <code>http</code> and <code>https</code> addresses. Unsafe link types such as <code>javascript:</code>, <code>data:</code> and <code>file:</code> are rejected before anything opens.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <h3>Mobile-friendly design</h3>
+        <p>The layout adapts to phones, tablets and desktops, with large tap targets and readable text on small screens.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
+        <h3>Proxy-based access where supported</h3>
+        <p>When a proxy backend is configured, pages open through it in a new tab. The tool shows which mode is active, so it never pretends a page was proxied when it was not.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h12M12 6l6 6-6 6"/></svg></div>
+        <h3>Easy navigation</h3>
+        <p>Your URL is remembered for the current browser tab session, so you can switch tabs and return without retyping anything.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h8l-1 8 10-12h-8z"/></svg></div>
+        <h3>Lightweight and fast</h3>
+        <p>One small HTML file with no frameworks, web fonts, trackers or image downloads, so the page loads quickly even on slow mobile connections.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY CHOOSE ===================== -->
+<section class="block" id="why-blockaway" aria-labelledby="why-title">
+  <div class="container prose">
+    <h2 id="why-title">Why Choose Blockaway?</h2>
+    <p>There are many web unblockers online. Blockaway focuses on being clear and easy to trust rather than making big promises.</p>
+    <ul>
+      <li><strong>Transparent about how it works.</strong> The sponsored first step is disclosed right under the button, and the status message always tells you whether a page opened through a proxy or directly.</li>
+      <li><strong>No installation.</strong> Unlike a VPN app or browser extension, a proxy site works instantly in any modern browser, which is helpful on shared computers.</li>
+      <li><strong>Your Blockaway tab is never hijacked.</strong> Both the sponsored page and your website open in new tabs. Blockaway does not redirect your current tab or open repeated pop-ups.</li>
+      <li><strong>Safer input handling.</strong> Address validation blocks script and data links, which reduces the risk of malicious links pasted into the box.</li>
+      <li><strong>Honest limitations.</strong> A web proxy is a convenience tool, not a privacy suite. Blockaway explains what it does not do so you can choose the right tool for your situation.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== DEVICES ===================== -->
+<section class="block alt" id="devices" aria-labelledby="devices-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="devices-title">Blockaway Proxy for Different Devices</h2>
+      <p>Blockaway runs in the web browser, so there is nothing to download on any platform. The only setting that sometimes needs attention is the browser's pop-up blocker, because the tool opens pages in new tabs.</p>
+    </div>
+    <div class="grid grid-2">
+      <article class="card">
+        <h3>Blockaway for Windows</h3>
+        <p>Works in Chrome, Edge, Firefox, Opera and other modern browsers on Windows 10 and 11. If a new tab does not open, look for the pop-up icon at the right side of the address bar and choose to always allow pop-ups from this site. In Chrome and Edge this is also under Settings → Privacy and security → Site settings → Pop-ups and redirects.</p>
+      </article>
+      <article class="card">
+        <h3>Blockaway for Android</h3>
+        <p>Use Chrome, Samsung Internet, Firefox or another mobile browser. If tabs are blocked, open the browser menu → Settings → Site settings → Pop-ups and redirects, and allow them for this site. You can add Blockaway to your home screen from the browser menu for one-tap access.</p>
+      </article>
+      <article class="card">
+        <h3>Blockaway for iPhone</h3>
+        <p>Works in Safari, Chrome and other iOS browsers. Safari blocks some new tabs by default; if the second tab does not appear, tap the link shown in the status message, or turn off <em>Block Pop-ups</em> in the iPhone Settings app under Safari (Apps → Safari on newer iOS versions). Use Share → Add to Home Screen to save the tool like an app.</p>
+      </article>
+      <article class="card">
+        <h3>Blockaway for Mac</h3>
+        <p>Works in Safari, Chrome, Firefox and Edge on macOS. In Safari, go to Safari → Settings → Websites → Pop-up Windows and set this site to <em>Allow</em>. In Chrome, click the blocked pop-up icon in the address bar and choose to always allow pop-ups from this site.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMPARISON ===================== -->
+<section class="block" id="comparison" aria-labelledby="compare-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="compare-title">Blockaway vs Other Web Proxy Services</h2>
+      <p>Web proxies, VPNs and browser extensions all change how your traffic reaches a website, but they work differently. This neutral comparison describes typical behavior; individual services vary.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption class="note" style="caption-side:bottom;text-align:left;padding:0 16px 14px">General comparison of common website-unblocking approaches. Features differ between specific providers.</caption>
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">Blockaway (this tool)</th><th scope="col">Hosted web proxies (e.g. CroxyProxy-style sites)</th><th scope="col">VPN apps</th><th scope="col">Proxy browser extensions</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Installation needed</th><td>No</td><td>No</td><td>Yes (app)</td><td>Yes (extension)</td></tr>
+          <tr><th scope="row">What is routed</th><td>Pages you open through the tool, when a proxy is configured</td><td>Pages loaded inside the proxy</td><td>All device traffic</td><td>Browser traffic</td></tr>
+          <tr><th scope="row">Works on locked-down devices</th><td>Often, if the site itself is reachable</td><td>Often</td><td>Rarely (install may be blocked)</td><td>Sometimes</td></tr>
+          <tr><th scope="row">Video &amp; complex logins</th><td>Depends on the proxy backend</td><td>Mixed results</td><td>Usually good</td><td>Usually good</td></tr>
+          <tr><th scope="row">Cost</th><td>Free (one sponsored tab per access)</td><td>Usually free with ads</td><td>Free tiers limited; paid plans common</td><td>Free and paid options</td></tr>
+          <tr><th scope="row">Who can see your traffic</th><td>The proxy operator, and your network for direct mode</td><td>The proxy operator</td><td>The VPN provider</td><td>The extension's proxy provider</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Bottom line: a web proxy like Blockaway is the quickest option for occasionally opening a page without installing anything. For full-device coverage or sensitive activity, a reputable VPN is usually the better choice.</p>
+  </div>
+</section>
+
+<!-- ===================== PROBLEMS ===================== -->
+<section class="block alt" id="troubleshooting" aria-labelledby="trouble-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="trouble-title">Common Blockaway Problems and Solutions</h2>
+      <p>Most issues with a proxy site come down to a typo, the browser's pop-up blocker, or a website that does not work well through proxies.</p>
+    </div>
+    <div class="grid grid-2">
+      <article class="card">
+        <h3>“Please enter a valid website address”</h3>
+        <p>Check for spaces or missing parts of the domain. Use a format like <code>example.com</code> or <code>https://www.example.com/page</code>. Only <code>http</code> and <code>https</code> links are supported; links starting with <code>javascript:</code>, <code>data:</code>, <code>file:</code> or <code>ftp:</code> are rejected for safety.</p>
+      </article>
+      <article class="card">
+        <h3>Nothing opens when I click the button</h3>
+        <p>Your browser probably blocked the new tab. Blockaway detects this and shows a link you can tap instead. To fix it permanently, allow pop-ups for this site (see the device instructions above).</p>
+      </article>
+      <article class="card">
+        <h3>The website loads but looks broken</h3>
+        <p>Proxies rewrite page links and scripts, and some modern sites rely on features that do not survive that process. Try the site's mobile version (often <code>m.</code> or <code>mobile.</code>), reload once, or use a VPN for that site.</p>
+      </article>
+      <article class="card">
+        <h3>“The proxy service is unavailable”</h3>
+        <p>The proxy server did not respond in time. Wait a minute and try again. If it keeps failing, you can choose to open the site directly — Blockaway labels this clearly because a direct visit does not go through a proxy.</p>
+      </article>
+      <article class="card">
+        <h3>The site says access is denied or shows a CAPTCHA</h3>
+        <p>Some websites block or challenge traffic from shared proxy IP addresses. This is controlled by the destination site, not by Blockaway.</p>
+      </article>
+      <article class="card">
+        <h3>My URL disappeared</h3>
+        <p>Blockaway remembers your URL only for the current tab session. Closing the tab, using a private window that was closed, or clicking <em>Start over</em> clears it.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="block" id="faq" aria-labelledby="faq-title">
+  <div class="container prose">
+    <h2 id="faq-title">Frequently Asked Questions About Blockaway</h2>
+    <details>
+      <summary>What is Blockaway?</summary>
+      <div><p>Blockaway is a free browser-based website unblocker. You enter a website address, and the tool opens it in a new tab through the web proxy configured by the site operator. If no proxy is configured, the tool says so and opens the site directly instead.</p></div>
+    </details>
+    <details>
+      <summary>Is Blockaway free to use?</summary>
+      <div><p>Yes. Blockaway is free. The first click on Access Website opens a clearly disclosed sponsored page in a new tab, which helps cover running costs. The second click opens the website you entered.</p></div>
+    </details>
+    <details>
+      <summary>Does Blockaway hide my IP address?</summary>
+      <div><p>Only when a page is loaded through a proxy. In that case the destination website normally sees the proxy server's IP address instead of yours, but the proxy operator can see the traffic it handles. In direct-navigation mode your IP address is not hidden. Blockaway does not provide full anonymity or end-to-end encryption.</p></div>
+    </details>
+    <details>
+      <summary>Is Blockaway the same as blockaway.net or CroxyProxy?</summary>
+      <div><p>No. This Blockaway site is an independent tool. It is not affiliated with, endorsed by, or operated by blockaway.net, CroxyProxy, or any other proxy service mentioned on this page.</p></div>
+    </details>
+    <details>
+      <summary>Why did a sponsored page open when I clicked Access Website?</summary>
+      <div><p>The first click intentionally opens one sponsored page in a new tab. This is disclosed under the button. Your Blockaway tab stays open and keeps the URL you typed, so you can return and click Continue to Website.</p></div>
+    </details>
+    <details>
+      <summary>Why won't some websites work through a web proxy?</summary>
+      <div><p>Sites with complex logins, streaming video, strict bot protection, or heavy JavaScript can break when their pages are rewritten by a proxy. Some websites also block known proxy IP addresses. In those cases a different proxy or a VPN may work better.</p></div>
+    </details>
+    <details>
+      <summary>Is using a web proxy legal?</summary>
+      <div><p>Using a web proxy is legal in most countries, including the United States. However, schools, employers and some countries have rules about bypassing network filters. You are responsible for following the laws and acceptable-use policies that apply to you.</p></div>
+    </details>
+    <details>
+      <summary>Does Blockaway store the websites I visit?</summary>
+      <div><p>The Blockaway page keeps the URL you typed in your browser's session storage so the two-step process works. It is cleared when you close the tab. Blockaway does not send that URL to its own server, but the sponsored page and any proxy provider operate under their own privacy policies.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="block" id="start" aria-labelledby="start-title">
+  <div class="container">
+    <div class="cta">
+      <h2 id="start-title">Start Using Blockaway</h2>
+      <p>Need to open a website quickly, without installing anything? Enter the address, click Access Website, then Continue to Website. It works on any device with a modern browser.</p>
+      <a class="btn" href="#home" id="cta-btn">Open the Blockaway tool</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h2>Blockaway</h2>
+        <p>Blockaway is an independent, lightweight website unblocker. Enter a URL and open it in a new tab through a configured web proxy, with clear labels whenever a page opens directly instead.</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#comparison">Comparison</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Help links">
+        <h2>Help</h2>
+        <ul>
+          <li><a href="#devices">Device guides</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+          <li><a href="#privacy">Privacy &amp; disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal" id="privacy">
+      <p><strong>Independence:</strong> Blockaway on this website is an independent tool. It is not affiliated with, endorsed by, or connected to blockaway.net, CroxyProxy, or any other proxy provider or website named on this page. Trademarks belong to their respective owners.</p>
+      <p><strong>Privacy:</strong> This page does not use cookies, analytics or trackers. The URL you enter is kept only in your browser's session storage and cleared when you close the tab. Pages opened through a proxy are processed by that third-party proxy provider, and the sponsored page is operated by an advertising partner; both follow their own privacy policies.</p>
+      <p><strong>Disclaimer:</strong> Blockaway does not guarantee access to any website and does not provide anonymity, encryption beyond what HTTPS sites already offer, or protection from monitoring. Use it lawfully and in line with the acceptable-use policies of your school, employer or network.</p>
+      <p>&copy; <span id="year">2026</span> Blockaway. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   BLOCKAWAY ACCESS TOOL
+   ---------------------------------------------------------------------
+   Two-step workflow:
+     Click 1  -> validate URL, open sponsored DIRECT_LINK in a new tab,
+                 save state in sessionStorage, button -> "Continue to Website".
+     Click 2  -> open the saved URL in a new tab through the configured
+                 proxy (PROXY_URL_TEMPLATE). If no proxy is configured,
+                 open it directly and SAY SO (it is not proxied).
+   A static page cannot proxy websites by itself; a proxy backend you run
+   or are permitted to use is required for genuine unblocking.
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  /* ------------------------- CONFIGURATION ------------------------- */
+  var CONFIG = {
+    // Sponsored destination opened on the first click (disclosed in the UI).
+    DIRECT_LINK: 'https://www.profitableratecpmnetwork.com/mvab04y8qg?key=9b3f3698915283a705c2390ffaaf3307',
+
+    // Proxy backend. Leave EMPTY until you have a working proxy you are
+    // allowed to use. Use {url} where the encoded target URL should go, e.g.
+    //   'https://proxy.your-domain.com/browse?url={url}'
+    // Use {rawurl} instead if your proxy expects the URL unencoded in the path, e.g.
+    //   'https://proxy.your-domain.com/{rawurl}'
+    PROXY_URL_TEMPLATE: '',
+
+    // Display name of the proxy shown to users (e.g. 'Blockaway Proxy Server').
+    PROXY_NAME: 'the Blockaway proxy server',
+
+    // Optional: a lightweight URL on the proxy server used to check that it
+    // is online before opening the tab (e.g. 'https://proxy.your-domain.com/health').
+    // The check uses fetch() in no-cors mode, so it only confirms reachability.
+    PROXY_HEALTH_URL: '',
+    HEALTH_TIMEOUT_MS: 6000,
+
+    // When the proxy is unavailable, offer a clearly labeled direct-visit option.
+    OFFER_DIRECT_FALLBACK: true,
+
+    // true  = sponsored step runs once per access (resets after "Continue").
+    // false = sponsored step runs once per browser-tab session.
+    SPONSOR_EVERY_ACCESS: true
+  };
+
+  var KEYS = { url: 'blockaway.url', step: 'blockaway.sponsorDone' };
+
+  /* --------------------------- ELEMENTS ---------------------------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $('proxy-form'), input = $('url-input'), btn = $('access-btn'),
+      btnLabel = $('access-btn-label'), statusEl = $('status'),
+      resetBtn = $('reset-btn'), modeBadge = $('mode-badge'), modeText = $('mode-text');
+  var busy = false;
+
+  /* ------------------ Safe sessionStorage wrapper ------------------ */
+  // Falls back to memory if storage is blocked (some private modes).
+  var memory = {};
+  var store = {
+    get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return memory[k] || null; } },
+    set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) { memory[k] = v; } },
+    del: function (k) { try { sessionStorage.removeItem(k); } catch (e) { delete memory[k]; } }
+  };
+
+  var proxyEnabled = function () { return /^https:\/\/[^\s]+$/i.test(CONFIG.PROXY_URL_TEMPLATE) && /\{(raw)?url\}/.test(CONFIG.PROXY_URL_TEMPLATE); };
+
+  /* ------------------------ URL validation ------------------------- */
+  // Returns { ok: true, url: 'https://...' } or { ok: false, error: '...' }.
+  function normalizeUrl(raw) {
+    var value = String(raw || '').trim().replace(/[\u0000-\u001F\u007F\s]+/g, '');
+    if (!value) return { ok: false, error: 'Please enter a website address, for example example.com.' };
+    if (value.length > 2048) return { ok: false, error: 'That address is too long. Please use a shorter URL.' };
+
+    // Protocol-relative "//example.com"
+    if (value.indexOf('//') === 0) value = 'https:' + value;
+
+    // Detect an explicit scheme ("name:"), but not "host:port".
+    var scheme = value.match(/^([a-z][a-z0-9+.\-]*):/i);
+    if (scheme && !/^[a-z][a-z0-9+.\-]*:\d+(\/|$|\?|#)/i.test(value)) {
+      var s = scheme[1].toLowerCase();
+      if (s !== 'http' && s !== 'https') {
+        return { ok: false, error: 'Only http:// and https:// website addresses are supported. "' + s + ':" links are blocked for your safety.' };
+      }
+      if (!/^https?:\/\//i.test(value)) value = value.replace(/^(https?):\/*/i, '$1://');
+    } else {
+      value = 'https://' + value;
+    }
+
+    var u;
+    try { u = new URL(value); } catch (e) {
+      return { ok: false, error: 'That does not look like a valid website address. Try a format like example.com.' };
+    }
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return { ok: false, error: 'Only http:// and https:// addresses are supported.' };
+    if (u.username || u.password) return { ok: false, error: 'Addresses containing a username or password are not allowed.' };
+
+    var host = u.hostname.toLowerCase();
+    var isIPv4 = /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
+    if (host === 'localhost' || host.slice(-6) === '.local' || host.charAt(0) === '[' ||
+        (isIPv4 && /^(0|10|127|169\.254|172\.(1[6-9]|2\d|3[01])|192\.168)\./.test(host))) {
+      return { ok: false, error: 'Local and private network addresses cannot be opened with Blockaway.' };
+    }
+    if (!isIPv4 && !/^([a-z0-9\-]+\.)+[a-z0-9\-]{2,}$/.test(host)) {
+      return { ok: false, error: 'Please include a full domain name, such as example.com.' };
+    }
+    return { ok: true, url: u.href, host: host };
+  }
+
+  function buildProxyUrl(target) {
+    return CONFIG.PROXY_URL_TEMPLATE
+      .replace('{url}', encodeURIComponent(target))
+      .replace('{rawurl}', target);
+  }
+
+  /* ------------------------- Tab opening --------------------------- */
+  // Opens a blank same-origin tab synchronously (inside the click handler,
+  // so browsers treat it as user-initiated), severs window.opener for
+  // security, then navigates it. Returns null if a pop-up blocker stopped it.
+  function openTab(url) {
+    var w = null;
+    try { w = window.open('about:blank', '_blank'); } catch (e) { w = null; }
+    if (!w) return null;
+    try { w.opener = null; } catch (e) { /* ignore */ }
+    if (url) { try { w.location.href = url; } catch (e) { w.close(); return null; } }
+    return w;
+  }
+
+  // Reachability check for the proxy server (no-cors: opaque response = online).
+  function checkProxy() {
+    if (!CONFIG.PROXY_HEALTH_URL || !window.fetch) return Promise.resolve(true);
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, CONFIG.HEALTH_TIMEOUT_MS);
+    return fetch(CONFIG.PROXY_HEALTH_URL, { mode: 'no-cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      .then(function () { return true; }, function () { return false; })
+      .then(function (ok) { clearTimeout(timer); return ok; });
+  }
+
+  /* ---------------------- Status rendering ------------------------- */
+  // Builds messages from text + optional link/button parts using
+  // textContent only (no innerHTML), so user input can never inject markup.
+  function setStatus(type, parts) {
+    statusEl.className = 'status show ' + type;
+    statusEl.textContent = '';
+    parts.forEach(function (p) {
+      if (typeof p === 'string') { statusEl.appendChild(document.createTextNode(p)); return; }
+      var el;
+      if (p.href) {
+        el = document.createElement('a');
+        el.href = p.href; el.target = '_blank';
+        el.rel = p.sponsored ? 'sponsored noopener noreferrer' : 'noopener noreferrer';
+        if (p.onClick) el.addEventListener('click', p.onClick);
+      } else if (p.action) {
+        el = document.createElement('button');
+        el.type = 'button'; el.className = 'btn-link';
+        el.addEventListener('click', p.action);
+      } else {
+        el = document.createElement('strong');
+      }
+      el.textContent = p.text;
+      statusEl.appendChild(el);
+    });
+  }
+  function clearStatus() { statusEl.className = 'status'; statusEl.textContent = ''; }
+
+  function setBusy(on) {
+    busy = on;
+    btn.setAttribute('aria-busy', on ? 'true' : 'false');
+  }
+
+  function syncButton() {
+    var done = store.get(KEYS.step) === '1';
+    btnLabel.textContent = done ? 'Continue to Website' : 'Access Website';
+    btn.classList.toggle('is-continue', done);
+    resetBtn.hidden = !(done || store.get(KEYS.url));
+  }
+
+  function showError(msg) {
+    input.setAttribute('aria-invalid', 'true');
+    setStatus('error', [msg]);
+    input.focus();
+  }
+
+  /* ------------------------ Main workflow -------------------------- */
+  function onSubmit(e) {
+    e.preventDefault();
+    if (busy) return;
+
+    // Use the current input; fall back to the saved URL if the box is empty.
+    var raw = input.value.trim() || store.get(KEYS.url) || '';
+    var result = normalizeUrl(raw);
+    if (!result.ok) { showError(result.error); return; }
+
+    input.removeAttribute('aria-invalid');
+    input.value = result.url;
+    store.set(KEYS.url, result.url);
+
+    if (store.get(KEYS.step) !== '1') sponsorStep(result);
+    else continueStep(result);
+  }
+
+  // STEP 1: open the sponsored page in a new tab (user-initiated only).
+  function sponsorStep(result) {
+    var w = openTab(CONFIG.DIRECT_LINK);
+    store.set(KEYS.step, '1');
+    syncButton();
+    if (w) {
+      setStatus('info', ['Step 1 complete: a sponsored page opened in a new tab. Come back to this tab and click ',
+        { text: 'Continue to Website' }, ' to open ', { text: result.host }, '.']);
+    } else {
+      setStatus('warn', ['Your browser blocked the sponsored tab. You can ',
+        { text: 'open the sponsored page', href: CONFIG.DIRECT_LINK, sponsored: true },
+        ' manually, then click ', { text: 'Continue to Website' }, ' to open ', { text: result.host }, '.']);
+    }
+    btn.focus();
+  }
+
+  // STEP 2: open the destination through the proxy (or labeled direct mode).
+  function continueStep(result) {
+    if (!proxyEnabled()) {
+      var d = openTab(result.url);
+      if (!d) return popupBlocked(result.url, result.host, false);
+      finish();
+      setStatus('warn', ['No proxy backend is configured on this site, so ', { text: result.host },
+        ' was opened directly in a new tab (not through a proxy). Your network\'s filters still apply.']);
+      return;
+    }
+
+    var proxied = buildProxyUrl(result.url);
+    // Open the tab now, while the click still counts as a user gesture.
+    var w = openTab(null);
+    if (!w) return popupBlocked(proxied, result.host, true);
+
+    setBusy(true);
+    setStatus('info', ['Connecting to ', { text: CONFIG.PROXY_NAME }, '…']);
+    checkProxy().then(function (online) {
+      setBusy(false);
+      if (!online) {
+        try { w.close(); } catch (e) { /* ignore */ }
+        var parts = ['The proxy service is unavailable right now. Please try again in a minute.'];
+        if (CONFIG.OFFER_DIRECT_FALLBACK) {
+          parts.push(' Or ', { text: 'open ' + result.host + ' directly (not proxied)', action: function () {
+            if (!openTab(result.url)) popupBlocked(result.url, result.host, false);
+            else setStatus('warn', ['Opened ', { text: result.host }, ' directly, without a proxy.']);
+          } }, '.');
+        }
+        setStatus('error', parts);
+        return;
+      }
+      try { w.location.href = proxied; } catch (e) { return popupBlocked(proxied, result.host, true); }
+      finish();
+      setStatus('ok', ['Opened ', { text: result.host }, ' through ', { text: CONFIG.PROXY_NAME },
+        ' in a new tab. Enter another URL to visit a different site.']);
+    });
+  }
+
+  function popupBlocked(href, host, viaProxy) {
+    setStatus('warn', ['Your browser blocked the new tab. ',
+      { text: 'Tap here to open ' + host + (viaProxy ? ' through the proxy' : ' directly (not proxied)'), href: href, onClick: finish },
+      ', or allow pop-ups for this site.']);
+  }
+
+  // Reset the sponsored step after a successful access, if configured.
+  function finish() {
+    if (CONFIG.SPONSOR_EVERY_ACCESS) store.del(KEYS.step);
+    syncButton();
+  }
+
+  function resetAll() {
+    store.del(KEYS.url); store.del(KEYS.step);
+    input.value = ''; input.removeAttribute('aria-invalid');
+    clearStatus(); syncButton(); input.focus();
+  }
+
+  /* ---------------------------- Init ------------------------------- */
+  function init() {
+    // Mode badge: tell users honestly which mode is active.
+    if (proxyEnabled()) {
+      modeBadge.classList.add('proxy');
+      modeText.textContent = 'Proxy mode: pages open through ' + CONFIG.PROXY_NAME;
+    } else {
+      modeText.textContent = 'Direct mode: no proxy configured (pages open unproxied)';
+    }
+
+    // Restore session state (URL + step) after reloads or tab switches.
+    var saved = store.get(KEYS.url);
+    if (saved && normalizeUrl(saved).ok) input.value = saved;
+    syncButton();
+    if (store.get(KEYS.step) === '1' && saved) {
+      setStatus('info', ['Welcome back. Click ', { text: 'Continue to Website' }, ' to open ', { text: normalizeUrl(saved).host }, '.']);
+    }
+
+    form.addEventListener('submit', onSubmit);
+    resetBtn.addEventListener('click', resetAll);
+    input.addEventListener('input', function () {
+      if (input.getAttribute('aria-invalid') === 'true') { input.removeAttribute('aria-invalid'); clearStatus(); }
+    });
+
+    // CTA scrolls to the tool and focuses the input.
+    $('cta-btn').addEventListener('click', function () { setTimeout(function () { input.focus({ preventScroll: true }); }, 350); });
+
+    // Mobile navigation toggle.
+    var toggle = document.querySelector('.nav-toggle'), links = $('nav-links');
+    toggle.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    links.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
+    });
+
+    $('year').textContent = String(new Date().getFullYear());
+  }
+
+  init();
+})();
+</script>
+</body>
 </html>
