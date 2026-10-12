@@ -12,8 +12,8 @@
     2. Review the CONFIG object in the <script> at the bottom of the file:
        - DIRECT_LINK ........ sponsored link opened on the first click
        - PROXY_URL_TEMPLATE . your full proxy backend (empty = not configured)
-       - LITE_PROXY_ENDPOINT  public AllOrigins API used for the built-in
-                              "lite" preview (scripts disabled)
+       - LITE_PROXIES ....... public proxy services (tried in order) used for
+                              the built-in "lite" preview (scripts disabled)
   A static HTML file cannot run a full web proxy: rewriting pages, cookies
   and scripts needs a server. See the comments in CONFIG for details.
   =====================================================================
@@ -388,9 +388,9 @@ details>div{padding:0 0 16px}
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </div>
-      <p class="viewer-note">Lite proxy preview: the page's HTML is fetched through the AllOrigins proxy service. Scripts and forms are disabled for your safety; images and styles load from the original site. “Open original” leaves the proxy.</p>
+      <p class="viewer-note">Lite proxy preview: the page's HTML is fetched through a free public proxy service (AllOrigins, CodeTabs or similar). Scripts and forms are disabled for your safety; images and styles load from the original site. “Open original” leaves the proxy.</p>
       <div class="viewer-stage">
-        <div class="viewer-loading" id="viewer-loading"><span class="spinner" aria-hidden="true"></span>Loading through proxy…</div>
+        <div class="viewer-loading" id="viewer-loading"><span class="spinner" aria-hidden="true"></span><span id="viewer-loading-text">Loading through proxy…</span></div>
         <iframe id="viewer-frame" title="Proxied website preview" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
       </div>
     </div>
@@ -424,7 +424,7 @@ details>div{padding:0 0 16px}
       <p>This site supports three connection modes, and the badge under the URL box always shows which one is active:</p>
       <ul>
         <li><strong>Full proxy</strong> – when the site owner connects a full proxy backend, pages open in a new tab through that server, including links, logins and most scripts.</li>
-        <li><strong>Lite proxy preview</strong> – the default. The page's HTML is fetched through <a href="https://allorigins.win/" rel="noopener noreferrer" target="_blank">AllOrigins</a>, a public open-source proxy API, and shown in a safe viewer with scripts turned off. Great for articles, documentation and news; not suitable for apps or video.</li>
+        <li><strong>Lite proxy preview</strong> – the default. The page's HTML is fetched through free public proxy APIs such as <a href="https://allorigins.win/" rel="noopener noreferrer" target="_blank">AllOrigins</a> and <a href="https://codetabs.com/" rel="noopener noreferrer" target="_blank">CodeTabs</a> (if one is busy, the next is tried automatically) and shown in a safe viewer with scripts turned off. Great for articles, documentation and news; not suitable for apps or video.</li>
         <li><strong>Direct</strong> – if no proxy can handle a request, Croxy Proxy offers to open the site directly and labels it “not proxied,” so you always know.</li>
       </ul>
     </div>
@@ -658,7 +658,7 @@ details>div{padding:0 0 16px}
     <h2 id="safety-title">Is Croxy Proxy Safe to Use?</h2>
     <p><strong>Croxy Proxy is designed to be safe for everyday browsing, but no web proxy makes you anonymous.</strong> Here is what you should know before using any proxy service.</p>
     <ul>
-      <li><strong>The proxy sees your traffic.</strong> Any proxy operator — including AllOrigins in lite mode or a full proxy backend — can see the pages it fetches for you. Avoid entering passwords, payment details or personal data through any third-party proxy.</li>
+      <li><strong>The proxy sees your traffic.</strong> Any proxy operator — including the public proxy services used in lite mode or a full proxy backend — can see the pages it fetches for you. Avoid entering passwords, payment details or personal data through any third-party proxy.</li>
       <li><strong>HTTPS still matters.</strong> This site runs over HTTPS, so the connection between you and the proxy can be encrypted. The proxy itself then connects to the website separately.</li>
       <li><strong>Lite mode protects you from page scripts.</strong> Pages in the built-in viewer cannot run JavaScript or submit forms, which blocks many common tricks used by malicious pages.</li>
       <li><strong>Unknown proxies can be risky.</strong> Some free proxies inject ads, track users or tamper with pages. Prefer services that clearly explain who runs them and what they log.</li>
@@ -737,7 +737,7 @@ details>div{padding:0 0 16px}
     </div>
     <div class="legal" id="privacy">
       <p><strong>Independence:</strong> This Croxy Proxy website is an independent tool. It is not affiliated with, endorsed by, or connected to CroxyProxy, croxyproxy.com, or any other service or platform named on this page. All trademarks belong to their respective owners.</p>
-      <p><strong>Privacy:</strong> This page uses no cookies, analytics or trackers. The URL you enter is kept only in your browser's session storage and is cleared when you close the tab; your theme choice is stored locally on your device. Pages you open through a proxy are processed by that third-party proxy provider (AllOrigins in lite mode), and the sponsored page is run by an advertising partner. Each follows its own privacy policy.</p>
+      <p><strong>Privacy:</strong> This page uses no cookies, analytics or trackers. The URL you enter is kept only in your browser's session storage and is cleared when you close the tab; your theme choice is stored locally on your device. Pages you open through a proxy are processed by that third-party proxy provider (public services such as AllOrigins or CodeTabs in lite mode), and the sponsored page is run by an advertising partner. Each follows its own privacy policy.</p>
       <p><strong>Disclaimer:</strong> Croxy Proxy does not guarantee access to any website and does not provide anonymity or protection from monitoring. Use it lawfully and in line with the policies of your school, employer or network provider.</p>
       <p>&copy; <span id="year">2026</span> Croxy Proxy. All rights reserved.</p>
     </div>
@@ -753,7 +753,7 @@ details>div{padding:0 0 16px}
                 save state in sessionStorage, buttons -> "Continue to …".
      Click 2 -> open the destination using the best available mode:
                 FULL  : PROXY_URL_TEMPLATE configured -> new tab via backend
-                LITE  : AllOrigins fetches the HTML -> sandboxed viewer
+                LITE  : public CORS proxies (tried in order) fetch the HTML -> sandboxed viewer
                         (main URL box only; app-like sites need FULL)
                 DIRECT: clearly labeled "not proxied" fallback
    ===================================================================== */
@@ -776,13 +776,44 @@ details>div{padding:0 0 16px}
     PROXY_HEALTH_URL: '',
     HEALTH_TIMEOUT_MS: 6000,
 
-    // LITE proxy: AllOrigins public API (https://allorigins.win, open source).
-    // It returns a page's HTML as JSON with CORS headers; no API key needed.
-    // Set to '' to disable lite mode.
-    LITE_PROXY_ENDPOINT: 'https://api.allorigins.win/get?url={url}',
-    LITE_PROXY_NAME: 'AllOrigins',
-    LITE_TIMEOUT_MS: 20000,
+    // LITE proxy: public CORS proxy services, tried IN ORDER until one works.
+    // Free public services go down, rate-limit, or get blocked by networks
+    // and ad blockers, so several are listed. The one that last worked is
+    // tried first next time. format 'json' = AllOrigins-style
+    // {contents, status}; 'raw' = the page HTML itself.
+    // For reliability, deploy the free Cloudflare Worker below and put it
+    // FIRST in this list. Set to [] to disable lite mode.
+    LITE_PROXIES: [
+      { name: 'AllOrigins',     url: 'https://api.allorigins.win/get?url={url}', format: 'json' },
+      { name: 'AllOrigins Raw', url: 'https://api.allorigins.win/raw?url={url}', format: 'raw' },
+      { name: 'CodeTabs',       url: 'https://api.codetabs.com/v1/proxy?quest={url}', format: 'raw' },
+      { name: 'corsproxy.io',   url: 'https://corsproxy.io/?url={url}', format: 'raw' },
+      { name: 'Whatever Origin',url: 'https://whateverorigin.org/get?url={url}', format: 'json' }
+    ],
+    LITE_TIMEOUT_MS: 10000,     // per service
     LITE_MAX_CHARS: 4000000,
+
+    /* OPTIONAL — your own lite proxy (free Cloudflare Worker, ~2 minutes):
+       1. dash.cloudflare.com -> Workers & Pages -> Create -> "Hello World" Worker.
+       2. Replace its code with the code below, set ALLOWED_ORIGIN to your
+          site's origin, and click Deploy.
+       3. Add as the FIRST entry of LITE_PROXIES:
+          { name: 'Croxy Proxy server', url: 'https://YOUR-WORKER.workers.dev/?url={url}', format: 'raw' }
+
+       const ALLOWED_ORIGIN = 'https://www.your-domain.com';
+       export default {
+         async fetch(req) {
+           const cors = { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN, 'Access-Control-Expose-Headers': 'X-Final-URL', 'Vary': 'Origin' };
+           let u;
+           try { u = new URL(new URL(req.url).searchParams.get('url')); } catch (e) { return new Response('Bad URL', { status: 400, headers: cors }); }
+           if (!/^https?:$/.test(u.protocol)) return new Response('Bad URL', { status: 400, headers: cors });
+           const r = await fetch(u.href, { redirect: 'follow', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; CroxyProxyLite/1.0)', 'Accept': 'text/html,application/xhtml+xml,text/plain;q=0.9,*' + '/' + '*;q=0.5' } });
+           const ct = r.headers.get('content-type') || 'text/html';
+           if (!/html|xml|text\/plain/i.test(ct)) return new Response('Unsupported content type', { status: 415, headers: cors });
+           return new Response(r.body, { status: r.status, headers: { ...cors, 'Content-Type': ct, 'X-Final-URL': r.url } });
+         }
+       };
+    */
 
     // true  = one sponsored tab per access (resets after each continue)
     // false = one sponsored tab per browser-tab session
@@ -799,7 +830,7 @@ details>div{padding:0 0 16px}
     reddit:    { name: 'Reddit',    url: 'https://www.reddit.com/' }
   };
 
-  var KEYS = { url: 'cp.url', step: 'cp.sponsorDone', theme: 'cp.theme' };
+  var KEYS = { url: 'cp.url', step: 'cp.sponsorDone', theme: 'cp.theme', lite: 'cp.liteProvider' };
 
   /* ---------------------------- Helpers ---------------------------- */
   var $ = function (id) { return document.getElementById(id); };
@@ -810,7 +841,7 @@ details>div{padding:0 0 16px}
     del: function (k) { try { sessionStorage.removeItem(k); } catch (e) { delete memory[k]; } }
   };
   function fullEnabled() { return /^https:\/\/\S+$/i.test(CONFIG.PROXY_URL_TEMPLATE) && /\{(raw)?url\}/.test(CONFIG.PROXY_URL_TEMPLATE); }
-  function liteEnabled() { return /^https:\/\/\S+\{url\}/i.test(CONFIG.LITE_PROXY_ENDPOINT) && !!window.fetch && !!window.DOMParser; }
+  function liteEnabled() { return liteProviders().length > 0 && !!window.fetch && !!window.DOMParser; }
   function sponsorDone() { return store.get(KEYS.step) === '1'; }
 
   /* ------------------------ URL validation ------------------------- */
@@ -1032,39 +1063,103 @@ details>div{padding:0 0 16px}
 
   function liteError(err) {
     var m = String(err && err.message || err);
-    if (err && err.name === 'AbortError') return 'The lite proxy took too long to respond. The website may be slow or blocking proxy servers.';
-    if (m.indexOf('site:') === 0) return 'The website responded with error ' + m.slice(5) + '. It may be unavailable or blocking proxy servers.';
-    if (m.indexOf('svc:') === 0) return 'The ' + CONFIG.LITE_PROXY_NAME + ' proxy service returned an error (' + m.slice(4) + ').';
+    if (m.indexOf('site:') === 0) return 'The website responded with error ' + m.slice(5) + ' to every proxy service. It may be unavailable or blocking proxy servers.';
     if (m.indexOf('type:') === 0) return 'That address is not a web page (' + m.slice(5) + '), so it cannot be shown in the lite viewer.';
-    if (m === 'empty') return 'The proxy returned an empty page. The website may require JavaScript or block proxies.';
     if (m === 'size') return 'That page is too large for the lite viewer.';
-    return 'The ' + CONFIG.LITE_PROXY_NAME + ' proxy service could not be reached. It may be down or blocked on your network.';
+    if (m === 'empty') return 'The proxy services returned an empty page. The website may require JavaScript or block proxies.';
+    return 'None of the free proxy services could load this page right now. They may be busy, down, or blocked on your network or by a browser extension (such as an ad blocker).';
   }
 
-  // Loads a URL through AllOrigins into the sandboxed viewer.
+  // Lower number = more useful to show the user when every service failed.
+  function errRank(e) {
+    var m = String(e && e.message || e);
+    return m.indexOf('type:') === 0 ? 0 : m === 'size' ? 1 : m.indexOf('site:') === 0 ? 2 : m === 'empty' ? 3 : 9;
+  }
+
+  // Services in configured order, with the last one that worked first.
+  function liteProviders() {
+    var list = (CONFIG.LITE_PROXIES || []).filter(function (p) {
+      return p && /^https:\/\/\S+\{(raw)?url\}/i.test(p.url) && (p.format === 'json' || p.format === 'raw');
+    });
+    var pref = store.get(KEYS.lite);
+    list.sort(function (a, b) { return (b.name === pref) - (a.name === pref); });
+    return list;
+  }
+
+  // Fetches one URL through one service. Resolves { html, contentType, finalUrl }.
+  // A rejection marked .final means "don't bother trying other services"
+  // (e.g. the target is a PDF); anything else moves on to the next service.
+  function fetchVia(provider, url) {
+    var tm = withTimeout(CONFIG.LITE_TIMEOUT_MS);
+    var fail = function (msg, final) { var e = new Error(msg); e.final = !!final; throw e; };
+    return fetch(fill(provider.url, url), { signal: tm.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' })
+      .then(function (r) {
+        if (!r.ok) fail('svc:' + r.status);
+        if (provider.format === 'json') {
+          return r.json().then(function (data) {
+            var st = (data && data.status) || {};
+            var code = Number(st.http_code) || 0;
+            if (code >= 400) fail('site:' + code);
+            var html = data && data.contents;
+            if (typeof html !== 'string' || !html.trim()) fail('empty');
+            var ct = String(st.content_type || 'text/html');
+            if (!/html|xml|text\/plain/i.test(ct) || /^data:/.test(html)) fail('type:' + ct.split(';')[0], true);
+            if (html.length > CONFIG.LITE_MAX_CHARS) fail('size', true);
+            return { html: html, contentType: ct, finalUrl: st.url || url };
+          });
+        }
+        var rct = r.headers.get('content-type') || 'text/html';
+        // A raw service answering with JSON is usually its own error message.
+        if (!/html|xml|text\/plain/i.test(rct)) fail('svc:unexpected ' + rct.split(';')[0]);
+        return r.text().then(function (html) {
+          if (!html.trim()) fail('empty');
+          if (html.length > CONFIG.LITE_MAX_CHARS) fail('size', true);
+          return { html: html, contentType: rct, finalUrl: r.headers.get('X-Final-URL') || url };
+        });
+      })
+      .then(function (res) { tm.done(); return res; }, function (e) { tm.done(); throw e; });
+  }
+
+  // Tries each service in turn until one returns the page.
+  function fetchLite(url, isCurrent) {
+    var providers = liteProviders(), i = 0, errors = [];
+    function next() {
+      if (!isCurrent()) return Promise.reject(new Error('superseded'));
+      if (i >= providers.length) {
+        errors.sort(function (a, b) { return errRank(a) - errRank(b); });
+        return Promise.reject(errors[0] || new Error('none'));
+      }
+      var p = providers[i++];
+      $('viewer-loading-text').textContent = 'Loading through ' + p.name + '…';
+      return fetchVia(p, url).then(function (res) {
+        res.provider = p.name;
+        store.set(KEYS.lite, p.name);
+        return res;
+      }, function (err) {
+        errors.push(err);
+        if (err && err.final) return Promise.reject(err);
+        return next();
+      });
+    }
+    return next();
+  }
+
+  // Loads a URL through the lite proxy services into the sandboxed viewer.
   // fromViewer = navigation inside the viewer (no sponsored step involved).
   function openInLiteViewer(url, t, fromViewer, isBack) {
     var id = ++requestId;
+    var isCurrent = function () { return id === requestId; };
     var statusEl = $('main-status');
     viewer.hidden = false;
     loadingEl.classList.add('show');
     setBusy($('access-btn'), true);
-    if (!fromViewer) setStatus(statusEl, 'info', ['Loading ', { text: t.host }, ' through ', { text: CONFIG.LITE_PROXY_NAME }, '…']);
+    if (!fromViewer) setStatus(statusEl, 'info', ['Loading ', { text: t.host }, ' through the lite proxy…']);
 
-    var tm = withTimeout(CONFIG.LITE_TIMEOUT_MS);
-    fetch(fill(CONFIG.LITE_PROXY_ENDPOINT, url), { signal: tm.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' })
-      .then(function (r) { if (!r.ok) throw new Error('svc:' + r.status); return r.json(); })
-      .then(function (data) {
-        var st = (data && data.status) || {};
-        var code = Number(st.http_code) || 0;
-        if (code >= 400) throw new Error('site:' + code);
-        var html = data && data.contents;
-        if (typeof html !== 'string' || !html.trim()) throw new Error('empty');
-        if (html.length > CONFIG.LITE_MAX_CHARS) throw new Error('size');
-        var ct = String(st.content_type || 'text/html');
-        if (!/html|xml|text\/plain/i.test(ct) || /^data:/.test(html)) throw new Error('type:' + ct.split(';')[0]);
-        if (id !== requestId) return; // a newer request superseded this one
-        var finalUrl = normalizeUrl(st.url || url);
+    fetchLite(url, isCurrent)
+      .then(function (res) {
+        if (!isCurrent()) return; // a newer request superseded this one
+        var html = res.html, ct = res.contentType;
+        var finalUrl = normalizeUrl(res.finalUrl);
         var pageUrl = finalUrl.ok ? finalUrl.url : url;
         if (/text\/plain/i.test(ct)) {
           var d = document.implementation.createHTMLDocument('');
@@ -1079,13 +1174,13 @@ details>div{padding:0 0 16px}
         $('viewer-back').disabled = viewerHistory.length === 0;
         if (!fromViewer) {
           finish();
-          setStatus(statusEl, 'ok', ['Showing ', { text: t.host }, ' through ', { text: CONFIG.LITE_PROXY_NAME },
+          setStatus(statusEl, 'ok', ['Showing ', { text: t.host }, ' through ', { text: res.provider },
             ' (lite mode, scripts off). Click links in the viewer to keep browsing.']);
           setTimeout(function () { viewer.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
         }
       })
       .catch(function (err) {
-        if (id !== requestId) return;
+        if (!isCurrent()) return;
         if (!currentUrl) viewer.hidden = true;
         var target = t || { url: url, host: new URL(url).hostname, name: new URL(url).hostname };
         target.statusEl = statusEl; target.button = $('access-btn'); target.kind = 'main';
@@ -1097,8 +1192,7 @@ details>div{padding:0 0 16px}
         }
       })
       .then(function () {
-        tm.done();
-        if (id === requestId) { loadingEl.classList.remove('show'); setBusy($('access-btn'), false); }
+        if (isCurrent()) { loadingEl.classList.remove('show'); setBusy($('access-btn'), false); }
       });
   }
 
@@ -1198,7 +1292,7 @@ details>div{padding:0 0 16px}
       $('yt-mode-note').textContent = 'First click opens a sponsored tab; the second opens YouTube through the proxy. Video playback is not guaranteed.';
       $('quick-mode-note').textContent = 'First click opens a sponsored tab; the second opens the site through the proxy.';
     } else {
-      if (liteEnabled()) { badge.classList.add('lite'); text.textContent = 'Lite proxy: pages load via ' + CONFIG.LITE_PROXY_NAME + ' (scripts off)'; }
+      if (liteEnabled()) { badge.classList.add('lite'); text.textContent = 'Lite proxy: pages load via free proxy services (scripts off)'; }
       else text.textContent = 'Direct mode: no proxy configured (pages open unproxied)';
       $('yt-mode-note').textContent = 'Full proxy browsing is not configured on this site, so after the sponsored tab YouTube opens directly (not through a proxy).';
       $('quick-mode-note').textContent = 'Full proxy browsing is not configured, so after the sponsored tab these sites open directly (not proxied).';
